@@ -1,18 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import ContactsForm from './components/ContactsForm/ContactsForm';
 import ContactsList from './components/ContactsList/ContactsList';
 import Filter from './components/Filter/Filter';
+import useLocaleStorage from './hooks/useLocaleStorage';
 
 export default function App() {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(localStorage.getItem('contacts')) ?? [];
-  });
+  const [contacts, setContacts] = useLocaleStorage('contacts', []);
   const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
 
   const addNewContact = (name, number) => {
     const contact = {
